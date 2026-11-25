@@ -41,8 +41,8 @@ public class ProgramApplication {
         //sorting using streams
         List<Person> similarNames = people.stream()
                 .filter(person -> person.getFirstName().equalsIgnoreCase(name)
-                         || person.getLastName().equalsIgnoreCase(name))
-                        .collect(Collectors.toList());
+                        || person.getLastName().equalsIgnoreCase(name))
+                .collect(Collectors.toList());
 
         //check if the loop is emptty
         if (similarNames.isEmpty()) {
@@ -54,29 +54,41 @@ public class ProgramApplication {
         }
 
 
-
         //just a space for easier read
         System.out.println("=======");
 
-        int total = 0;//variable to hold total age
-        int age = people.get(0).getAge();//variable to hold the age, first person age for now
-        int oldest = people.get(0).getAge();//variable to hold the oldest person age, it holds first person in the lists age
-        int youngest = people.get(0).getAge();//initialize variable tp hold youngest person first but assign to the first person in the list at first
-        //for that iterates and finds the oldes, youngest and the total age we will divide for average
-        for (Person person : people) {
-            age = person.getAge();//get the persons age
-            total += age;//increment the total age every iteration by the age
-            if (age > oldest) {//check if the current age is > than oldest
-                oldest = age;//assign oldest to the age if the condition is true
-            }
-            if (age < youngest) {//check if the age is < youngest
-                youngest = age;//assign youngest to age if the above condition is true
-            }
-        }
+//        int total = 0;//variable to hold total age
+//        int age = people.get(0).getAge();//variable to hold the age, first person age for now
+//        int oldest = people.get(0).getAge();//variable to hold the oldest person age, it holds first person in the lists age
+//        int youngest = people.get(0).getAge();//initialize variable tp hold youngest person first but assign to the first person in the list at first
+//        //for that iterates and finds the oldes, youngest and the total age we will divide for average
+//        for (Person person : people) {
+//            age = person.getAge();//get the persons age
+//            total += age;//increment the total age every iteration by the age
+//            if (age > oldest) {//check if the current age is > than oldest
+//                oldest = age;//assign oldest to the age if the condition is true
+//            }
+//            if (age < youngest) {//check if the age is < youngest
+//                youngest = age;//assign youngest to age if the above condition is true
+//            }
+//        }
         //initialize average variable and calclat the average by dividing the total with the size of the array
-        double average = (double) total / people.size();
+        //double average = (double) total / people.size();
         //print the average, oldest and youngest age
-        System.out.println("Average age: " + average);
+
+        //make a stream and map it to getAge so we can use the max() and mi()
+        int oldest = people.stream()
+                .mapToInt(person -> person.getAge())
+                .max()
+                .getAsInt();
+
+        int youngest = people.stream()
+                .mapToInt(person -> person.getAge())
+                .min()
+                .getAsInt();
+
+
+        // System.out.println("Average age: " + average);
         System.out.println("Oldest age: " + oldest);
         System.out.println("Youngest age: " + youngest);
 
