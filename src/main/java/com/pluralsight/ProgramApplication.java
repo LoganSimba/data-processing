@@ -38,7 +38,7 @@ public class ProgramApplication {
 //            System.out.println("No matches found for: " + name);
 //
 //        }
-        //sorting using stream
+        //sorting using streams
         List<Person> similarNames = people.stream()
                 .filter(person -> person.getFirstName().equalsIgnoreCase(name)
                          || person.getLastName().equalsIgnoreCase(name))
