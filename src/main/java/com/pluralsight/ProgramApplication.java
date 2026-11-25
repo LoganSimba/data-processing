@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class ProgramApplication {
     public static void main(String[] args) {
@@ -25,18 +26,34 @@ public class ProgramApplication {
         System.out.println("Enter a name to search: ");
         String name = scanner.nextLine().trim();
         //initialize the list that will hold similar names
-        List<Person> similarNames = new ArrayList<>();
-        for (Person person : people) {//iterate thorught he loop
-            //if we find a match in either first or last name, add to the list
-            if (person.getFirstName().equalsIgnoreCase(name) || person.getLastName().equalsIgnoreCase(name)) {
-                similarNames.add(person);
-                System.out.println(person.toString());//print the person
-            }
-        }//check if after iterating that nothing has been added to the list, if it has, its an emptu list, let the user know
+//        List<Person> similarNames = new ArrayList<>();
+//        for (Person person : people) {//iterate thorught he loop
+//            //if we find a match in either first or last name, add to the list
+//            if (person.getFirstName().equalsIgnoreCase(name) || person.getLastName().equalsIgnoreCase(name)) {
+//                similarNames.add(person);
+//                System.out.println(person.toString());//print the person
+//            }
+//        }//check if after iterating that nothing has been added to the list, if it has, its an emptu list, let the user know
+//        if (similarNames.isEmpty()) {
+//            System.out.println("No matches found for: " + name);
+//
+//        }
+        //sorting using stream
+        List<Person> similarNames = people.stream()
+                .filter(person -> person.getFirstName().equalsIgnoreCase(name)
+                         || person.getLastName().equalsIgnoreCase(name))
+                        .collect(Collectors.toList());
+
+        //check if the loop is emptty
         if (similarNames.isEmpty()) {
-            System.out.println("No matches found for: " + name);
+            System.out.println("No matches found for \"" + name + "\".");
+        } else {
+            similarNames.forEach(person -> System.out.println(person.getFirstName() + " " +
+                    person.getLastName()));
 
         }
+
+
 
         //just a space for easier read
         System.out.println("=======");
